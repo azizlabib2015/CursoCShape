@@ -1,0 +1,7 @@
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\bin\Debug\appGameCenter.exe.config
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\bin\Debug\appGameCenter.exe
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\bin\Debug\appGameCenter.pdb
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.csproj.CoreCompileInputs.cache
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.exe
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.pdb
+D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.csprojResolveAssemblyReference.cache

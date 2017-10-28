@@ -64,6 +64,18 @@ public class Player
         this.email = email;
         this.country = country;
     }
+
+    public Player(Player p)
+    {
+        nickname = p.nickname;
+        email = p.email;
+        country = p.country;
+    }
+    public Player()
+    {
+
+    }
+
     #endregion
 
     //criterio de igualdad

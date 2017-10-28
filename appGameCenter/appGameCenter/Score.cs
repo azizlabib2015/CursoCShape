@@ -1,14 +1,16 @@
 ﻿
-public class Score
+public class Score:Player
 {
-    private string nickname;
+    //private string nickname;
 
-    public string Nickname
-    {
-        get { return this.nickname; }
-    }
+    //public string Nickname
+    //{
+    //    get { return this.nickname; }
+    //}
 
     private int points;
+    private int v;
+    private Player player1;
 
     public int Points
     {
@@ -35,16 +37,27 @@ public class Score
     }
 
     #region Contrsuctores
-    public Score()
-    {
+    
 
-    }
-
-    public Score(string nickname, int points)
+    public Score(string nickname, string email, Countries country,int points) : base(nickname, email, country)
     {
-        this.nickname = nickname;
         this.points = points;
     }
+
+    public Score():base()
+    {
+      
+    }
+
+    public Score(Player player1, int points):base(player1)
+    {
+        
+        this.points = points;
+    }
+
+
+
+
     #endregion
 }
 

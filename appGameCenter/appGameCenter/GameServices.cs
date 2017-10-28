@@ -181,7 +181,7 @@ public static class GameServices
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error al leer el archivo");
+            Console.WriteLine("Error al leer el archivo\n" + e);
         }
         return lines;
     }
@@ -227,9 +227,107 @@ public static class GameServices
         return res;
     }
     //juegos publicado de determinado genero
+    public static int gamesCountByGenre(Genres genre)
+    {
+        int res = 0;
+        foreach (Game game in Games)
+        {
+            if (game.Genre == genre)
+            {
+                res++;
+            }
+        }
+        return res;
+    }
+    //juegos con mayor puntuacion
+    public static Game gameBestScore()
+    {
+        Game bestScoreGame = null;
+        int bestScore = -1;
+        foreach (Game game in Games)
+        {
+            foreach (Platforms ranking in game.Rankings.Keys)
+            {
+                foreach (Score score in game.Rankings[ranking].Scores)
+                {
+                    if (bestScore < score.Points)
+                    {
+                        bestScoreGame = game;
+                        bestScore = score.Points;
+                    }
+                }
+            }
+        }
+        return bestScoreGame;
+    }
+
+    //juegos que una determinada cadena de texto
+    public static bool ExistGameByString(string gameString)
+    {
+        bool res = false;
+        foreach (Game game in Games)
+        {
+            if (game.Name.Contains(gameString))
+            {
+                res = true;
+            }
+        }
+        return res;
+    }
+    //juegos de determinado jugador
+    public static List<Game> GetGamesByPlayer(Player player)
+    {
+        List<Game> gamesList = new List<Game>();
+        bool isGame = false;
+        foreach (Game game in Games)
+        {
+            foreach (Platforms ranking in game.Rankings.Keys)
+            {
+                foreach (Score score in game.Rankings[ranking].Scores)
+                {
+                    if (score.Nickname == player.Nickname)
+                    {
+                        if (!gamesList.Contains(game))
+                        {
+                            gamesList.Add(game);
+                        }
+                        
+
+                    }
 
 
+                }
 
+            }
+
+        }
+        return gamesList;
+    }
+
+    //juegos que ha jugado un jugador
+    public static void gamesByPlayer()
+    {
+        List<Game> gamesList = null;
+        string res = "";
+        foreach (Player player in Players)
+        {
+            gamesList = GetGamesByPlayer(player);
+            res += string.Format("->{0}:\n========>", player.Nickname);
+
+            foreach (Game game in gamesList)
+            {
+                res += string.Format("{0},", game.Name);
+            }
+            if (gamesList.Count == 0)
+            {
+                res += "not Result";
+            }
+
+            res += "\n";
+
+        }
+        Console.WriteLine(res);
+    }
     #endregion
 }
 
