@@ -9,8 +9,6 @@ public class Score:Player
     //}
 
     private int points;
-    private int v;
-    private Player player1;
 
     public int Points
     {

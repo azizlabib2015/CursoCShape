@@ -33,7 +33,6 @@ public class Game
 
     private Dictionary<Platforms,Ranking> rankings;
 
-
     public Dictionary<Platforms,Ranking> Rankings
     {
         get { return this.rankings; }
@@ -90,6 +89,53 @@ public class Game
         }
         
         this.rankings = rankings;
+    }
+
+    public Game(string data, List<string> gameDataRankingsLine)
+    {
+        bool error = false;
+        //hacemos el split de la cadena data
+        string[] splitDataGame = data.Split('-');
+        //almacenar datos del Game
+
+        if (splitDataGame.Length==4)
+        {
+            if (splitDataGame[3]=="")
+            {
+                System.Console.WriteLine("Error :list plataform not exist in dataGame");
+            }
+            else
+            {
+                string[] splitPlatforms = splitDataGame[3].Split(',');
+                if (splitPlatforms.Length>1)
+                {
+                    foreach (string platfrom in splitPlatforms)
+                    {
+                        if (platfrom!="")
+                        {
+                            string res = GameServices.existPlatform(platfrom);
+                            if (res!="")
+                            {
+                                Platforms p = GameServices.getPlatform(res);
+                                this.platforms.Add(p);
+                            }
+                        }
+                        else
+                        {
+                            error = true;
+                            System.Console.WriteLine("Error :list plataform not exist in dataGame");
+                        }
+                    }
+                }
+                else
+                {
+                    System.Console.WriteLine("Error :list plataform not exist in dataGame");
+                }
+            }
+        }
+        //to doooooooo controlar el error y meter datos ranking
+        
+
     }
 
     #endregion

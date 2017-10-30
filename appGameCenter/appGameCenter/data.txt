@@ -5,12 +5,14 @@ player4-email4-France
 player5-email5-Germany
 
 *+*+*+*
-Game1-Action-2015-LINUX,MAC,PS4,Game2-Puzzles-2010-MAC,XBOXONE,PS4,LINUX,Game3-Simulation-2009-MAC,XBOXONE,PS4,LINUX,
+Game1-Action-2015-LINUX,MAC,PS4,
+Game2-Puzzles-2010-LINUX,MAC,PS4,
+Game3-Simulation-2009-MAC,XBOXONE,PS4,LINUX,
 *+*+*+*
-Game1-ranking1-player1=5,player5=13,
-Game1-ranking2-player2=53,player4=23,player5=23,
-Game1-ranking3-player3=5,
-Game2-ranking1-player1=5,player5=13,
-Game2-ranking2-player2=53,player4=23,player5=23,
-Game2-ranking3-player3=5,
-Game3-ranking2-player2=53,player4=23,player5=23,
+Game1-ranking1-PS4:player1=5,player5=13,
+Game1-ranking2-MAC:player2=53,player4=23,player5=23,
+Game1-ranking3-LINUX:player3=5,
+Game2-ranking1-PS4:player1=5,player5=13,
+Game2-ranking2-MAC:player2=53,player4=23,player5=23,
+Game2-ranking3-LINUX:player3=5,
+Game3-ranking2-PS4:player2=53,player4=23,player5=23,

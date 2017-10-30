@@ -50,7 +50,7 @@ public static class GameServices
 
             foreach (Platforms ranking in game.Rankings.Keys)
             {
-                res += string.Format("{0}-{1}-", game.Name, game.Rankings[ranking].Name);
+                res += string.Format("{0}-{1}-{2}:", game.Name, game.Rankings[ranking].Name, ranking);
                 foreach (Score score in game.Rankings[ranking].Scores)
                 {
                     res += string.Format("{0}={1},", score.Nickname, score.Points);
@@ -73,9 +73,10 @@ public static class GameServices
             {
                 res += string.Format("{0},", platform);
             }
+            res += "\n";
         }
 
-        res += "\n";
+
         return res;
     }
 
@@ -142,23 +143,92 @@ public static class GameServices
             }
 
         }
-        //to do
-        Console.WriteLine("----------Players--------------");
-        foreach (string s in playerLines)
+        //almacenar datos de players importado de un fichero de texto
+        foreach (string dataPlayer in playerLines)
         {
-            Console.WriteLine(s);
+            if (dataPlayer != "")
+            {
+                players.Add(new Player(dataPlayer));
+            }
+        }
+        //almacenar datos de games importado de un fichero de texto
+        saveDataGame(gameLines, rankingGameLines);
+
+        //foreach (Player item in Players)
+        //{
+        //    Console.WriteLine(item+"\n");
+        //}
+        //Console.WriteLine("----------Players--------------");
+        //foreach (string s in playerLines)
+        //{
+        //    Console.WriteLine(s);
+        //}
+
+        //Console.WriteLine("----------Games--------------");
+        //foreach (string s2 in gameLines)
+        //{
+        //    Console.WriteLine(s2);
+        //}
+        //Console.WriteLine("----------RankingGames--------------");
+        //foreach (string s3 in rankingGameLines)
+        //{
+        //    Console.WriteLine(s3);
+        //}
+    }
+
+    public static Platforms getPlatform(string res)
+    {
+        Platforms p=new Platforms();
+        foreach (Platforms dataPlatform in Enum.GetValues(typeof(Platforms)))
+        {
+            if (dataPlatform.ToString().ToUpper() == res.ToUpper())
+            {
+                p = dataPlatform;
+            }
+        }
+        return p;
+    }
+
+    public static string existPlatform(string platfrom)
+    {
+        string res = "";
+        foreach (Platforms dataPlatform in Enum.GetValues(typeof(Platforms)))
+        {
+            if (dataPlatform.ToString().ToUpper()==platfrom.ToUpper())
+            {
+                res = dataPlatform.ToString();
+            }
+        }
+            return res;
+    }
+
+    private static void saveDataGame(List<string> gameLines, List<string> rankingGameLines)
+    {
+         
+        //recoremos un foreach da cada lina de datos almacenado del juego
+        foreach (string data in gameLines)
+        {
+            string[] splitData = data.Split('-');
+            List<string>  gameDataRankingsLine =getListRankingsByGame(splitData[0],rankingGameLines);
+            Games.Add(new Game(data,gameDataRankingsLine));
         }
 
-        Console.WriteLine("----------Games--------------");
-        foreach (string s2 in gameLines)
+
+    }
+
+    private static List<string> getListRankingsByGame(string dataNameGame, List<string> rankingGameLines)
+    {
+        List<string> dataList = new List<string>();
+        foreach ( string data in rankingGameLines)
         {
-            Console.WriteLine(s2);
+            string[] splitData = data.Split('-');
+            if (dataNameGame==splitData[0])
+            {
+                string d = string.Format("{0}-{1}",splitData[1],splitData[2]);
+                dataList.Add(d);
+            }
         }
-        Console.WriteLine("----------RankingGames--------------");
-        foreach (string s3 in rankingGameLines)
-        {
-            Console.WriteLine(s3);
-        }
+        return dataList;
     }
 
     private static List<string> ReadFile(string path)
@@ -210,11 +280,11 @@ public static class GameServices
         int res = 0;
         foreach (Game game in Games)
         {
-            if (game.Name == nameGame)
+            if (game.Name.ToLower() == nameGame.ToLower())
             {
                 foreach (Platforms ranking in game.Rankings.Keys)
                 {
-                    if (game.Rankings[ranking].Name == nameRanking)
+                    if (game.Rankings[ranking].Name.ToLower() == nameRanking.ToLower())
                     {
                         foreach (Score score in game.Rankings[ranking].Scores)
                         {
@@ -291,7 +361,7 @@ public static class GameServices
                         {
                             gamesList.Add(game);
                         }
-                        
+
 
                     }
 
@@ -329,5 +399,120 @@ public static class GameServices
         Console.WriteLine(res);
     }
     #endregion
+
+    public static void runTest()
+    {
+        while (true)
+        {
+            Console.WriteLine("Enter a Comand: ");
+            string data = Console.ReadLine();
+
+            data = data.ToLower();
+            string[] splitData = data.Split(' ');
+            string comand = splitData[0];
+            //comand = comand.Replace(" ", "");
+            string value = "";
+            string value2 = "";
+            if (splitData.Length > 1)
+            {
+                value = splitData[1];
+                // value = value.Replace(" ", "");
+                if (splitData.Length > 2)
+                {
+                    value2 = splitData[2];
+                }
+            }
+
+            switch (comand)
+            {
+                case "import":
+                    Import();
+                    break;
+                case "export":
+                    Export();
+                    break;
+                case "oldest":
+                    Game g = GetOldestGame();
+                    printGameName(g);
+                    break;
+                case "scorecount":
+                    if (value == "" || value2 == "")
+                    {
+                        Console.WriteLine("Error writing command Example: scoreCount{gameName}_{nameRanking}");
+                    }
+                    else
+                    {
+                        int r = GetScoreCount(value, value2);
+                        Console.WriteLine(string.Format("the score of the game:{0}", r));
+                    }
+                    break;
+                case "gamescountbygenre":
+                    if (value == "")
+                    {
+                        Console.WriteLine("Error writing command Example: gamesCountByGenre{gameName}");
+                    }
+                    else
+                    {
+                        int res = GetCountTotalByGenre(value);
+                        Console.WriteLine("Total games of this genre: " + res);
+                        //Genres genre;
+                        //if (Enum.TryParse(value,true,out genre))
+                        //{
+
+                        //    genre = (Genres)Enum.Parse(typeof(Genres), value);
+                        //    gamesCountByGenre(genre);
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine("{0} is not a member of the Genres enumeration.", value);
+                        //}
+                    }
+                    break;
+
+                case "gamesbyplayer":
+                    gamesByPlayer();
+                    break;
+
+                case "exit":
+                    System.Environment.Exit(-1);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
+
+    }
+
+    private static int GetCountTotalByGenre(string value)
+    {
+
+        int res = 0;
+        foreach (Genres genre in Enum.GetValues(typeof(Genres)))
+        {
+            if (genre.ToString().ToUpper() == value.ToUpper())
+            {
+                res += gamesCountByGenre(genre);
+
+            }
+
+        }
+
+        return res;
+    }
+
+    private static void printGameName(Game g)
+    {
+        if (g != null)
+        {
+            Console.WriteLine("The oldest game is: " + g.Name);
+        }
+        else
+        {
+            Console.WriteLine("Error: the game is null or incorrect");
+        }
+    }
 }
 

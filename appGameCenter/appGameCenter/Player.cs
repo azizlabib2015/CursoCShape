@@ -1,7 +1,7 @@
 ﻿using System;
 public enum Genres
 {
-    Action = 0,
+    Action=0,
     Strategy = 1,
     RPG = 2,
     Puzzles = 3,
@@ -74,6 +74,14 @@ public class Player
     public Player()
     {
 
+    }
+    public Player(string data)
+    {
+        data = data.Replace(" ", "");
+        string[] splitData = data.Split('-');
+        this.nickname = splitData[0];
+        this.email = splitData[1];
+        this.country = (Countries)Enum.Parse(typeof(Countries), splitData[2]);
     }
 
     #endregion
