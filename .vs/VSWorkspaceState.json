@@ -2,10 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\appGameCenter",
-    "\\appGameCenter\\appGameCenter",
-    "\\appGameCenter\\appGameCenter\\obj",
-    "\\appGameCenter\\appGameCenter\\Properties"
+    "\\appGameCenter\\appGameCenter"
   ],
-  "SelectedNode": "\\appGameCenter\\appGameCenter\\Program.cs",
+  "SelectedNode": "\\appGameCenter\\appGameCenter\\Game.cs",
   "PreviewInSolutionExplorer": false
 }

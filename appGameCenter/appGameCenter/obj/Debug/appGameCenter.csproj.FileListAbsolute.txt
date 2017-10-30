@@ -5,3 +5,10 @@ D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.c
 D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.exe
 D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.pdb
 D:\Desarollo de VideoJuego\appGameCenter\appGameCenter\obj\Debug\appGameCenter.csprojResolveAssemblyReference.cache
+F:\CursoCShape\appGameCenter\appGameCenter\bin\Debug\appGameCenter.exe.config
+F:\CursoCShape\appGameCenter\appGameCenter\bin\Debug\appGameCenter.exe
+F:\CursoCShape\appGameCenter\appGameCenter\bin\Debug\appGameCenter.pdb
+F:\CursoCShape\appGameCenter\appGameCenter\obj\Debug\appGameCenter.csprojResolveAssemblyReference.cache
+F:\CursoCShape\appGameCenter\appGameCenter\obj\Debug\appGameCenter.csproj.CoreCompileInputs.cache
+F:\CursoCShape\appGameCenter\appGameCenter\obj\Debug\appGameCenter.exe
+F:\CursoCShape\appGameCenter\appGameCenter\obj\Debug\appGameCenter.pdb

@@ -42,20 +42,38 @@ public static class GameServices
         }
     }
 
+    public static Player getPlayer(string stringPlayer)
+    {
+        Player p = null;
+        foreach (Player player in Players)
+        {
+            if (player.Nickname == stringPlayer)
+            {
+                p = player;
+            }
+        }
+        return p;
+    }
+
     private static string ConvertGames2ToString()
     {
         string res = "";
         foreach (Game game in Games)
         {
-
+            if (Games.Count>1) { 
             foreach (Platforms ranking in game.Rankings.Keys)
             {
-                res += string.Format("{0}-{1}-{2}:", game.Name, game.Rankings[ranking].Name, ranking);
+                res += string.Format("{0}-{1}-{2}-", game.Name, game.Rankings[ranking].Name, ranking);
                 foreach (Score score in game.Rankings[ranking].Scores)
                 {
                     res += string.Format("{0}={1},", score.Nickname, score.Points);
                 }
                 res += "\n";
+            }
+            }
+            else
+            {
+                Console.WriteLine("No haya datos para exportar");
             }
         }
 
@@ -88,6 +106,13 @@ public static class GameServices
             res += string.Format("{0}\n", player.ToString());
         }
         return res;
+    }
+
+    internal static Genres getGenre(string dataGenre)
+    {
+        Genres g = new Genres();
+        
+        return g;
     }
 
     public static void Import()
@@ -154,37 +179,34 @@ public static class GameServices
         //almacenar datos de games importado de un fichero de texto
         saveDataGame(gameLines, rankingGameLines);
 
-        //foreach (Player item in Players)
-        //{
-        //    Console.WriteLine(item+"\n");
-        //}
-        //Console.WriteLine("----------Players--------------");
-        //foreach (string s in playerLines)
-        //{
-        //    Console.WriteLine(s);
-        //}
+        //guardar datos en su lista correspondiente
+        Console.WriteLine("datos importado");
 
-        //Console.WriteLine("----------Games--------------");
-        //foreach (string s2 in gameLines)
-        //{
-        //    Console.WriteLine(s2);
-        //}
-        //Console.WriteLine("----------RankingGames--------------");
-        //foreach (string s3 in rankingGameLines)
-        //{
-        //    Console.WriteLine(s3);
-        //}
     }
 
-    public static Platforms getPlatform(string res)
+    public static List<Platforms> getPlatform(string[] dataPlatforms)
     {
-        Platforms p=new Platforms();
+        List<Platforms> p = new List<Platforms>();
+
+        
         foreach (Platforms dataPlatform in Enum.GetValues(typeof(Platforms)))
         {
-            if (dataPlatform.ToString().ToUpper() == res.ToUpper())
+            foreach (string platfrom in dataPlatforms)
             {
-                p = dataPlatform;
+                if (platfrom != "")
+                {
+                    string res = GameServices.existPlatform(platfrom);
+                    if (res != "")
+                    {
+                        if (dataPlatform.ToString().ToUpper() == res.ToUpper())
+                        {
+                            p.Add(dataPlatform);
+                        }
+                    }
+                }
+
             }
+            
         }
         return p;
     }
@@ -194,23 +216,27 @@ public static class GameServices
         string res = "";
         foreach (Platforms dataPlatform in Enum.GetValues(typeof(Platforms)))
         {
-            if (dataPlatform.ToString().ToUpper()==platfrom.ToUpper())
+            if (dataPlatform.ToString().ToUpper() == platfrom.ToUpper())
             {
                 res = dataPlatform.ToString();
             }
         }
-            return res;
+        return res;
     }
 
     private static void saveDataGame(List<string> gameLines, List<string> rankingGameLines)
     {
-         
+
         //recoremos un foreach da cada lina de datos almacenado del juego
         foreach (string data in gameLines)
         {
-            string[] splitData = data.Split('-');
-            List<string>  gameDataRankingsLine =getListRankingsByGame(splitData[0],rankingGameLines);
-            Games.Add(new Game(data,gameDataRankingsLine));
+            if (data != "*+*+*+*")
+            {
+                string[] splitData = data.Split('-');
+                List<string> gameDataRankingsLine = getListRankingsByGame(splitData[0], rankingGameLines);
+                Game newGame = new Game(data, gameDataRankingsLine);
+                Games.Add(newGame);
+            }
         }
 
 
@@ -219,12 +245,12 @@ public static class GameServices
     private static List<string> getListRankingsByGame(string dataNameGame, List<string> rankingGameLines)
     {
         List<string> dataList = new List<string>();
-        foreach ( string data in rankingGameLines)
+        foreach (string data in rankingGameLines)
         {
             string[] splitData = data.Split('-');
-            if (dataNameGame==splitData[0])
+            if (dataNameGame == splitData[0])
             {
-                string d = string.Format("{0}-{1}",splitData[1],splitData[2]);
+                string d = string.Format("{0}-{1}-{2}", splitData[2], splitData[1], splitData[3]);
                 dataList.Add(d);
             }
         }

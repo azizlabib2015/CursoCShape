@@ -97,7 +97,7 @@ public class Game
         //hacemos el split de la cadena data
         string[] splitDataGame = data.Split('-');
         //almacenar datos del Game
-
+        List<Platforms> listP = new List<Platforms>();
         if (splitDataGame.Length==4)
         {
             if (splitDataGame[3]=="")
@@ -109,23 +109,18 @@ public class Game
                 string[] splitPlatforms = splitDataGame[3].Split(',');
                 if (splitPlatforms.Length>1)
                 {
-                    foreach (string platfrom in splitPlatforms)
+
+                    this.platforms = GameServices.getPlatform(splitPlatforms);
+                    this.name = splitDataGame[0];
+                    foreach (Genres genre in System.Enum.GetValues(typeof(Genres)))
                     {
-                        if (platfrom!="")
+                        if (genre.ToString().ToLower()== splitDataGame[1].ToLower())
                         {
-                            string res = GameServices.existPlatform(platfrom);
-                            if (res!="")
-                            {
-                                Platforms p = GameServices.getPlatform(res);
-                                this.platforms.Add(p);
-                            }
-                        }
-                        else
-                        {
-                            error = true;
-                            System.Console.WriteLine("Error :list plataform not exist in dataGame");
+                            this.genre = genre;
                         }
                     }
+                    this.releaseDate = int.Parse(splitDataGame[2]);
+
                 }
                 else
                 {
@@ -134,6 +129,31 @@ public class Game
             }
         }
         //to doooooooo controlar el error y meter datos ranking
+        if (error!=true)
+        {
+            foreach (string gameData in gameDataRankingsLine)
+            {
+                string[] splitData = gameData.Split('-');
+                foreach (Platforms platform in this.Platforms)
+                {
+                    string ss = splitData[0].ToLower();
+                    if (ss==platform.ToString().ToLower())
+                    {
+
+                        string dataR = string.Format("{0}-{1}",splitData[1],splitData[2]);
+                        Ranking r = new Ranking(dataR);
+                        Dictionary<Platforms, Ranking> dictionaryData = new Dictionary<Platforms, Ranking>();
+                        dictionaryData.Add(platform, r);
+                        this.rankings = dictionaryData;
+                    }
+                }
+
+            }
+        }
+        else
+        {
+            System.Console.WriteLine("Error :can not save dataGame");
+        }
         
 
     }
